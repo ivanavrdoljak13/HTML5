@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CodePen - Quiz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+        body {
+            background: white;
+            width: 100vw;
+            height: 100vh;
+            margin: 0px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-family: 'Poppins';
+            font-size: 20px;
+        }
+
+        #container {
+            min-width: 300px;
+            max-width: 80vw;
+            min-height: 300px;
+            max-width: 85vh;
+            padding: 2px 10px;
+            background: purple;
+            border-radius: 10px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 3px 10px 10px black;
+        }
+
+        #category {
+            font-size: 15px;
+        }
+
+        #buttonBox {
+            display: grid;
+            margin: 10px;
+        }
+
+        button {
+            margin: 2px;
+            background: transparent;
+            border: 1px solid white;
+            border-radius: 7px;
+            color: white;
+            padding: 5px 10px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+
+        button:active {
+            background: red;
+        }
+
+        #buttonBox button:last-child:active {
+            background: transparent;
+        }
+
+        #ibutton {
+            color: purple;
+            border: 2px solid purple;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            font-size: 25px;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            animation: spin 1s linear infinite;
+        }
+
+        #ibutton:active {
+            background: purple;
+        }
+
+        #ibutton:hover {
+            animation: stop;
+            background: transparent;
+        }
+
+        #report {
+            width: 0px;
+            height: 300px;
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(3px);
+            border-radius: 10px;
+            color: white;
+            position: absolute;
+            transition: 1s;
+            overflow: auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotateZ(0deg);
+            }
+
+            25% {
+                transform: rotateZ(20deg);
+            }
+
+            50% {
+                transform: rotateZ(0deg);
+            }
+
+            0% {
+                transform: rotateZ(-20deg);
+            }
+
+            100% {
+                transform: rotateZ(0deg);
+            }
+        }
+
+        #report div {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        select {
+            width: 200px;
+            height: auto;
+            border: 1px solid white;
+            border-radius: 5px;
+            background: transparent;
+            color: white;
+        }
+
+        select option {
+            background: black;
+        }
+
+        select:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: white;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            border: 1px solid white;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="ibutton" onclick="izvjestaj()">!</button>
+    <div id="report">
+        <p>wrong choice clicked: 0</p>
+        <p>question answered: 0</p>
+        <div>
+            <p>difficulty:</p>
+            <select id="selectDiff" onchange="changeDiff(event)">
+                <option value="any">Any difficulty</option>
+                <option value="easy">Easy</option>
+                <option value="medium">Normal</option>
+                <option value="hard">Hard</option>
+            </select>
+        </div>
+        <div>
+            <p>category:</p>
+            <select id="selectCate" onchange="changeCat(event)">
+                <option value="any">Any difficulty</option>
+                <option value="9">General Knowledge</option>
+                <option value="10">Entertainment: Books</option>
+                <option value="11">Entertainment: film</option>
+                <option value="12">Entertainment: music</option>
+                <option value="13">Entertainment: musicals & theatres</option>
+                <option value="14">Entertainment: Television</option>
+                <option value="15">Entertainment: Video games</option>
+                <option value="16">Entertainment: Board Games</option>
+                <option value="17">Science & Nature</option>
+                <option value="18">Science: computers</option>
+                <option value="19">Science: Mathematics</option>
+                <option value="20">Mythology</option>
+                <option value="21">Sports</option>
+                <option value="22">Geography</option>
+                <option value="23">History</option>
+                <option value="24">Polotics</option>
+                <option value="25">Art</option>
+                <option value="26">Celebrities</option>
+                <option value="27">Animals</option>
+                <option value="28">Vehicles</option>
+                <option value="29">Entertainment: Comics</option>
+                <option value="30">Science: Gadgets</option>
+                <option value="31">Entertainment: Japanese Anime & Manga</option>
+                <option value="32">Entertainment: Cartoon & Animations</option>
+            </select>
+        </div>
+    </div>
+    <div id="container">
+        <p id="category">category</p>
+        <p id="question">question</p>
+        <div id="buttonBox">
+            <button onclick="wrongClick()">button1</button>
+            <button onclick="wrongClick()">button2</button>
+            <button onclick="wrongClick()">button3</button>
+            <button onclick="correctClick()">button4</button>
+        </div>
+    </div>
+
+
+
+    <script>
+        var objekt = []; //globalna varijabla
+        var qesNum = 0;
+        var pogresno = 0;
+        var apilink = "https://opentdb.com/api.php?amount=50&type=multiple"
+        function fetchApi() {
+            fetch(apilink)
+                .then(response => response.json())
+                // .then(function(response) { return response.json() })
+                .then(data => {
+                    console.log(data)
+                    objekt = data.results;
+                    generiraj()
+                })
+        }
+        fetchApi()
+
+        function generiraj() {
+            document.getElementById("question").innerHTML = objekt[qesNum].question;
+            document.getElementById("category").innerHTML = objekt[qesNum].category;
+            var buttonBox = document.getElementById("buttonBox");
+            console.log(buttonBox.children)
+            buttonBox.children[0].innerHTML = objekt[qesNum].incorrect_answers[0];
+            buttonBox.children[1].innerHTML = objekt[qesNum].incorrect_answers[1];
+            buttonBox.children[2].innerHTML = objekt[qesNum].incorrect_answers[2];
+            buttonBox.children[3].innerHTML = objekt[qesNum].correct_answer;
+            /*if(qesNum == 49)
+                qesNum = 0;
+            else
+                qesNum++;*/
+            qesNum = (qesNum == 49) ? 0 : qesNum + 1;
+        }
+
+        function correctClick() {
+            buttonBox.children[3].style.gridRowStart = Math.floor(Math.random() * 4)
+            generiraj();
+        }
+        function wrongClick() {
+            pogresno++;
+            document.getElementById("report").children[0].innerText = 'wrong choice clicked: ' + pogresno
+        }
+
+        function izvjestaj() {
+            var report = document.getElementById("report")
+            if (report.style.width == "300px")
+                report.style.width = "0px"
+            else
+                report.style.width = "300px"
+        }
+        function changeDiff(event) {
+            apilink = apilink.replace("&difficulty=easy", "")
+            apilink = apilink.replace("&difficulty=medium", "")
+            apilink = apilink.replace("&difficulty=hard", "")
+
+            if (event.target.value != "any")
+                apilink += "&difficulty=" + event.target.value;
+            fetchApi()
+        }
+
+        function changeCat(event){
+            apilink = apilink.replace(/&category=[0-9]+/, "")
+            if (event.target.value != "any")
+                apilink += "&category=" + event.target.value;
+            fetchApi();
+        }
+    </script>
+</body>
+
+</html>

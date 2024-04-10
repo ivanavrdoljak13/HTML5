@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button class="translate" id="en-gb">English</button>
+    <button class="translate" id="zh-tw">Chinese</button>
+
+    <ul>
+        <li class="lang" key="HOME"></li>
+        <li class="lang" key="ABOUT"></li>
+        <li class="lang" key="CONTACT"></li>
+    </ul>
+
+    <h1 class="lang" key="HOW ARE">How are you?</h1>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        var arrLang = {
+            "en-gb": {
+                "HOME": "Home",
+                "ABOUT": "About us",
+                "CONTACT": "Contact Us",
+                "HOW ARE": "How are you?",
+            },
+            "zh-tw": {
+                "HOME": "故鄉",
+                "ABOUT": "關於",
+                "CONTACT": "關於關於",
+                "HOW ARE": "Kako si"
+            }
+        };
+
+        $(document).ready(function(){
+
+        })
+
+        $(".translate").click(function(){
+            var lang = $(this).attr("id");
+
+            $(".lang").each(function(index,element){
+                $(this).text(arrLang[lang][$(this).attr("key")]);
+            });
+        });
+    </script>
+</body>
+</html>
